@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "antd": "^5.15.0",
     "axios": "^1.6.7",
+    "date-fns": "^3.3.1",
+    "js-base64": "^3.7.7",
+    "md5": "^2.3.0",
     "next": "14.1.1",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@types/md5": "^2.3.5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
