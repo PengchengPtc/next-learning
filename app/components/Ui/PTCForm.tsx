@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-
+type FormValues = {
+  [K: string]: any;
+};
 export const useForm = () => {
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState<FormValues>({});
 
   return {
     values,
-    getValue: (name) => values[name] || "",
+    getValue: (name: string) => values[name] || "",
     setValue: (name: string, value: string) => {
       setValues((prev) => ({
         ...prev,
@@ -27,14 +29,13 @@ export const PTCForm = (props: PTCFormProps) => {
 
   useEffect(() => {
     const newInputNames: any = [];
-
     React.Children.forEach(children, (child) => {
-      const { name, initValue } = child.props;
       if (React.isValidElement(child)) {
+        const { name, initValue } = child?.props;
         if (name) {
           newInputNames.push(name);
         }
-        // 设置默认值
+        // 设置默认值，todo
         // if (
         //   name &&
         //   initValue !== undefined &&
@@ -71,7 +72,7 @@ export const PTCForm = (props: PTCFormProps) => {
 
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
-      return React.cloneElement(child, {
+      return React.cloneElement(child as React.ReactElement, {
         value: form.values[child.props.name] || "",
         onChange: handleChange,
       });
