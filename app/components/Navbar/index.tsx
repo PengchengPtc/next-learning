@@ -10,32 +10,29 @@ import { LoginModal } from "@/components/LoginModal";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="flex justify-center items-center gap-40 h-20">
-      <section className=""> PTC-C </section>
-      <section className="flex gap-40">
-        {navs.map((nav) => {
-          return (
-            <Link
-              className="flex justify-center items-center"
-              href={nav?.path}
-              key={nav?.name}
-            >
-              <div className="text-gray-900 hover:text-gray-600">
-                {nav.name}
-              </div>
-            </Link>
-          );
-        })}
+    <div className="flex justify-center items-center gap-20 h-16 bg-white shadow-md p-4">
+      <section className="text-2xl font-bold text-red-600"> LOGO </section>
+      <section className="flex gap-60">
+        <section className="flex gap-20 items-center">
+          {navs.map((nav) => {
+            return (
+              <Link href={nav?.path} key={nav?.name}>
+                <div className="text-blue-900 hover:text-yellow-600 cursor-pointer">
+                  {nav.name}
+                </div>
+              </Link>
+            );
+          })}
+        </section>
         <PTCButton
           onClick={() => {
-            console.log("click, open modal");
             setIsOpen(true);
           }}
         >
           登陆
         </PTCButton>
-        <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
       </section>
+      <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 }

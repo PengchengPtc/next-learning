@@ -20,6 +20,7 @@ export const useForm = () => {
 interface PTCFormProps {
   form: any;
   children: React.ReactNode;
+  onSubmit?: (values: FormValues) => void;
 }
 
 export const PTCForm = (props: PTCFormProps) => {
@@ -66,7 +67,8 @@ export const PTCForm = (props: PTCFormProps) => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    alert(JSON.stringify(form.values, null, 2));
+    props.onSubmit && props.onSubmit(form.values);
+    console.log("form.values", form.values);
     form.reset();
   };
 
@@ -83,11 +85,11 @@ export const PTCForm = (props: PTCFormProps) => {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
       {childrenWithProps}
-      <input
+      {/* <input
         type="submit"
         value="确定"
         className="px-3 py-2 bg-blue-500 text-white cursor-pointer rounded"
-      />
+      /> */}
     </form>
   );
 };
