@@ -26,7 +26,7 @@ export async function POST(
   const { to, templateId } = JSON.parse(data);
   console.log("to", to, "templateId", templateId);
 
-  const AppId = "2c94811c8cd4da0a018e088a59dd2e2";
+  const AppId = "2c94811c8cd4da0a018e088a59dd2e22";
   const AccountId = "2c94811c8cd4da0a018e088a584b2e1b";
   const AuthToken = "7d39299040544231938385294e8b54b2";
   const NowDate = format(new Date(), "yyyyMMddHHmmss");

@@ -39,7 +39,9 @@ export function LoginModal(props: LoginModalProps) {
         }
       )
       .then((res: any) => {
-        if (res?.code === 0) {
+        console.log(res);
+        
+        if (res?.statusCode === '000000') {
           setIsShowVerifyCode(true);
         } else {
           message.error(res?.msg || "未知错误");
