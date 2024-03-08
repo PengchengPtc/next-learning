@@ -38,7 +38,7 @@ export default function Navbar() {
             setIsOpen(true);
           }}
         >
-          登陆
+          登陆/注册
         </PTCButton>
       </section>
       <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />

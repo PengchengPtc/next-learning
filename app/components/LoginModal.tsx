@@ -29,7 +29,7 @@ export function LoginModal(props: LoginModalProps) {
           message.success("登录成功");
           setIsOpen(false);
         } else {
-          message.error( "登录失败");
+          message.error("登录失败");
         }
       });
   };
@@ -70,7 +70,7 @@ export function LoginModal(props: LoginModalProps) {
 
   return (
     <PTCModal
-      title="登陆"
+      title="手机验证码登陆/注册"
       isOpen={isOpen}
       onClose={() => {
         setIsOpen(false);
