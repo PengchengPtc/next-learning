@@ -82,8 +82,6 @@ export function LoginModal(props: LoginModalProps) {
           type="code"
           name="verifyCode"
           label="验证码"
-          initValue="15555555878"
-          inputWidth="50px"
         >
           <span
             className="text-blue-500  cursor-pointer"
