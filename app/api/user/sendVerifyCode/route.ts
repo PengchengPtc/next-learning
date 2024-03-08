@@ -4,18 +4,10 @@ import md5 from "md5";
 import { encode } from "js-base64";
 import request from "@/service/fetch";
 
-const readStream = async (stream: any) => {
-  const reader = stream.getReader();
-  const decoder = new TextDecoder("utf-8");
-  let result = "";
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) {
-      return result;
-    }
-    result += decoder.decode(value);
-  }
-};
+import { readStream } from "@/utils/util";
+import Redis from "ioredis";
+
+const redis = new Redis();
 
 export async function POST(
   req: NextRequest,
@@ -53,6 +45,23 @@ export async function POST(
     }
   );
   console.log("response", response);
+  const { statusCode, templateSMS, statusMsg } = response as any;
+  console.log(process.env.SESSION_COOKIE_NAME, "dfasfsdfhhhh???");
 
-  return NextResponse.json(response);
+  if (statusCode === "000000") {
+    await redis.set(to, verifyCode, "EX", 60 * 5);
+
+    return NextResponse.json({
+      code: 0,
+      msg: statusMsg,
+      data: {
+        templateSMS,
+      },
+    });
+  } else {
+    return NextResponse.json({
+      code: statusCode,
+      msg: statusMsg,
+    });
+  }
 }

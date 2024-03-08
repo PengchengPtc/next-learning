@@ -7,13 +7,14 @@ interface PTCFormInputProps {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   initValue?: string;
   children?: React.ReactNode;
-  inputWidth?: string; 
+  inputWidth?: string;
+  type?: string; // 增加新的属性 type
 }
 
 export const PTCFormInput: React.FC<PTCFormInputProps> = (
   props: PTCFormInputProps
 ) => {
-  const { name, label, value, onChange, children, inputWidth = '100%' } = props;
+  const { name, label, value, onChange, children, inputWidth = '100%', type } = props;
   const paddingRight = value ? `calc(100% - ${inputWidth})` : '0px'; // 用户输入内容后，调整 paddingRight
 
   return (
@@ -27,6 +28,7 @@ export const PTCFormInput: React.FC<PTCFormInputProps> = (
         className="px-3 py-2 border border-gray-300 rounded w-full"
         placeholder={`请您输入${label}`}
         style={{ paddingRight }} // 使用 paddingRight 限制输入文本的区域长度
+        maxLength={type === 'code' ? 4 : undefined} // 当 type 为 'code' 时，限制输入长度为 4
       />
       <div className="absolute top-0.5 right-2 flex items-center">
         {children}

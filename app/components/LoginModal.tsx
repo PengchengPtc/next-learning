@@ -14,8 +14,23 @@ export function LoginModal(props: LoginModalProps) {
   const form = useForm();
   const { isOpen, setIsOpen } = props;
   const [isShowVerifyCode, setIsShowVerifyCode] = useState(false);
+
   const onFinish = () => {
     console.log("form.values", form.values);
+    request
+      .post("/api/user/login", form.values, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res: any) => {
+        console.log(res);
+        if (res.code === 0) {
+          message.success("登录成功");
+        } else {
+          message.error( "登录失败");
+        }
+      });
   };
 
   const handleGetVerifyCode = () => {
@@ -40,8 +55,8 @@ export function LoginModal(props: LoginModalProps) {
       )
       .then((res: any) => {
         console.log(res);
-        
-        if (res?.statusCode === '000000') {
+
+        if (res?.code === 0) {
           setIsShowVerifyCode(true);
         } else {
           message.error(res?.msg || "未知错误");
@@ -63,6 +78,7 @@ export function LoginModal(props: LoginModalProps) {
       <PTCForm form={form}>
         <PTCFormInput name="phone" label="手机号" initValue="15555555878" />
         <PTCFormInput
+          type="code"
           name="verifyCode"
           label="验证码"
           initValue="15555555878"
