@@ -27,6 +27,7 @@ export function LoginModal(props: LoginModalProps) {
         console.log(res);
         if (res.code === 0) {
           message.success("登录成功");
+          setIsOpen(false);
         } else {
           message.error( "登录失败");
         }

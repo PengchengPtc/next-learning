@@ -9,6 +9,9 @@ import { LoginModal } from "@/components/LoginModal";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  // Add state to track the active nav
+  const [activeNav, setActiveNav] = useState<string>(navs[0].name);
+
   return (
     <div className="flex justify-center items-center gap-20 h-16 bg-white shadow-md p-4">
       <section className="text-2xl font-bold text-red-600"> LOGO </section>
@@ -17,7 +20,13 @@ export default function Navbar() {
           {navs.map((nav) => {
             return (
               <Link href={nav?.path} key={nav?.name}>
-                <div className="text-blue-900 hover:text-yellow-600 cursor-pointer">
+                <div
+                  className={`text-blue-900 hover:text-yellow-600 cursor-pointer ${
+                    activeNav === nav.name ? "text-yellow-600" : ""
+                  }`}
+                  // Set active nav onClick
+                  onClick={() => setActiveNav(nav.name)}
+                >
                   {nav.name}
                 </div>
               </Link>
