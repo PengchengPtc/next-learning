@@ -9,6 +9,7 @@ const redis = new Redis();
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const data = readStream(req.body);
+
   const { phone, verifyCode, identity_type = "phone" } = JSON.parse(await data);
   const db = await prepareConnection();
 
@@ -41,10 +42,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
         },
       });
     }
-    
+
     const user = new User();
     user.nickname = `用户_${Math.floor(Math.random() * 10000)}`;
-    user.avatar = "/images/avatar.jpg";
+    user.avatar = "/images/avatar.jpeg";
     user.job = "暂无";
     user.introduce = "暂无";
 

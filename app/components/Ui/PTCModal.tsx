@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import close from "@/assets/close.png";
+import close from "/public/images/close.png";
 
 interface PTCModalProps {
   children?: React.ReactNode | string;

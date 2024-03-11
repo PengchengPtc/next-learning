@@ -4,6 +4,7 @@ import { useForm } from "./Ui/PTCForm";
 import { CountDown } from "./CountDown";
 import request from "@/service/fetch";
 import { message } from "antd";
+import { useAuth } from "@/hooks/useAuth";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -12,6 +13,8 @@ interface LoginModalProps {
 
 export function LoginModal(props: LoginModalProps) {
   const form = useForm();
+  const { user, login, logout } = useAuth();
+
   const { isOpen, setIsOpen } = props;
   const [isShowVerifyCode, setIsShowVerifyCode] = useState(false);
 
@@ -27,6 +30,11 @@ export function LoginModal(props: LoginModalProps) {
         console.log(res);
         if (res.code === 0) {
           message.success("登录成功");
+          login({
+            userId: res.data?.userId,
+            nickname: res.data?.nickname,
+            avatar: res.data?.avatar,
+          });
           setIsOpen(false);
         } else {
           message.error("登录失败");
@@ -78,11 +86,7 @@ export function LoginModal(props: LoginModalProps) {
     >
       <PTCForm form={form}>
         <PTCFormInput name="phone" label="手机号" initValue="15555555878" />
-        <PTCFormInput
-          type="code"
-          name="verifyCode"
-          label="验证码"
-        >
+        <PTCFormInput type="code" name="verifyCode" label="验证码">
           <span
             className="text-blue-500  cursor-pointer"
             onClick={handleGetVerifyCode}
