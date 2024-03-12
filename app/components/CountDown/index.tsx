@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 interface IProps {
-  time: number;
+  time?: number;
   onEnd: Function;
 }
 

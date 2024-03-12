@@ -5,6 +5,7 @@ import { CountDown } from "./CountDown";
 import request from "@/service/fetch";
 import { message } from "antd";
 import { useAuth } from "@/hooks/useAuth";
+import Cookies from "js-cookie";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -13,7 +14,7 @@ interface LoginModalProps {
 
 export function LoginModal(props: LoginModalProps) {
   const form = useForm();
-  const { user, login, logout } = useAuth();
+  const { setUser } = useAuth();
 
   const { isOpen, setIsOpen } = props;
   const [isShowVerifyCode, setIsShowVerifyCode] = useState(false);
@@ -30,11 +31,8 @@ export function LoginModal(props: LoginModalProps) {
         console.log(res);
         if (res.code === 0) {
           message.success("登录成功");
-          login({
-            userId: res.data?.userId,
-            nickname: res.data?.nickname,
-            avatar: res.data?.avatar,
-          });
+          const cookieUser = Cookies.get("user");
+          setUser(JSON.parse(cookieUser as string));
           setIsOpen(false);
         } else {
           message.error("登录失败");
@@ -92,7 +90,7 @@ export function LoginModal(props: LoginModalProps) {
             onClick={handleGetVerifyCode}
           >
             {isShowVerifyCode ? (
-              <CountDown time={10} onEnd={handleCountDownEnd} />
+              <CountDown onEnd={handleCountDownEnd} />
             ) : (
               "获取验证码"
             )}
