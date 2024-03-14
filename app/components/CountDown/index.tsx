@@ -6,8 +6,8 @@ interface IProps {
 }
 
 export const CountDown = (props: IProps) => {
-  const { time, onEnd } = props;
-  const [count, setCount] = useState(time || 60);
+  const { time = 60, onEnd } = props;
+  const [count, setCount] = useState(time);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -28,4 +28,3 @@ export const CountDown = (props: IProps) => {
 
   return <div className="text-[#909090]">{`${count}秒后重新发送`}</div>;
 };
-

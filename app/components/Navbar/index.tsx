@@ -85,7 +85,8 @@ export default function Navbar() {
           )}
         </section>
       </div>
-      <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
+
+      {isOpen && <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />}
     </div>
   );
 }
