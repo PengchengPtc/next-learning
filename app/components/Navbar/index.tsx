@@ -7,19 +7,29 @@ import { PTCButton } from "@/components/Ui";
 import { useState } from "react";
 import { LoginModal } from "@/components/LoginModal";
 import { useAuth } from "@/hooks/useAuth";
-import { Avatar, Dropdown, Menu, MenuProps } from "antd";
+import { Avatar, Dropdown, MenuProps, message } from "antd";
 import HomeOutlined from "@ant-design/icons/HomeOutlined";
 import LoginOutlined from "@ant-design/icons/LoginOutlined";
 import request from "@/service/fetch";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeNav, setActiveNav] = useState<string>(navs[0].name);
 
   const { user, setUser } = useAuth();
+  const router = useRouter();
 
   const handleGotoPersonalPage = () => {
     console.log("点击进入主页");
+  };
+
+  const handleGotoEditorPage = () => {
+    if (user?.id) {
+      router.push("/write");
+      return;
+    }
+    message.warning("请先登录");
   };
   const handleLogout = () => {
     // 发退出请求
@@ -65,24 +75,29 @@ export default function Navbar() {
             );
           })}
         </div>
-        <section>
-          {user?.id ? (
-            <>
-              <Dropdown menu={{ items }} placement="bottomLeft">
-                <div>
-                  <Avatar src={user.avatar} size={50} />
-                </div>
-              </Dropdown>
-            </>
-          ) : (
-            <PTCButton
-              onClick={() => {
-                setIsOpen(true);
-              }}
-            >
-              登陆/注册
-            </PTCButton>
-          )}
+        <section className="flex gap-10">
+          <section>
+            <PTCButton onClick={handleGotoEditorPage}>写文章</PTCButton>
+          </section>
+          <section>
+            {user?.id ? (
+              <>
+                <Dropdown menu={{ items }} placement="bottomLeft">
+                  <div>
+                    <Avatar src={user.avatar} size={50} />
+                  </div>
+                </Dropdown>
+              </>
+            ) : (
+              <PTCButton
+                onClick={() => {
+                  setIsOpen(true);
+                }}
+              >
+                登陆/注册
+              </PTCButton>
+            )}
+          </section>
         </section>
       </div>
 
